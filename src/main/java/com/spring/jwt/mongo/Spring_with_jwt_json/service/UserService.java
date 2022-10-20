@@ -13,12 +13,16 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private UserRepository userRepository;
+    private TokenService tokenService;
+
+    @Autowired
+    public UserService(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
+        this.tokenService = tokenService;
     }
+
 
     public User getUser(ObjectId userId){
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -27,8 +31,14 @@ public class UserService {
 
     public String saveUser(User user){
 
-        userRepository.save(user);
-        return "Successfully created user";
+        User savedUser = userRepository.save(user);
+        return "{" + "\"message\":"+
+                "\"Successfully Created User\","+
+                "\"data\": "
+                +savedUser+", "+
+                "\"token\":\""+
+                tokenService.createToken(savedUser.getId())+
+                "\"}";
     }
 
 
