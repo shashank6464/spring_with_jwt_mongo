@@ -20,7 +20,7 @@ savedUser = userRepository.save(User)
 // token Service
 createToken(ObjectId userId){
 
-	TOKEN_SECRET = “sdffdsafdkjkasjffdjsalkf”
+	TOKEN_SECRET = “abc123”
 	Algorithm // jwt => jwt.HMAC256(TOKEN_SECRET)
 
 	// Generation of JSON Web Token by two claims with userId and Current Date
